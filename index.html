@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0c10">
+  <meta name="description" content="計算・迷路・数字さがしの大きな字のプリントを、その場で作って A4 1 枚に刷る。「もう 1 枚」を押すたびに違う問題になり、答えの紙も一緒に出る。">
+  <title>PENCIL HOUR — 大きな字のプリントを毎日刷る</title>
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PENCIL HOUR">
+  <meta property="og:title" content="PENCIL HOUR — 大きな字のプリントを毎日刷る">
+  <meta property="og:description" content="計算・迷路・数字さがしの大きな字のプリントを、その場で作って A4 1 枚に刷る。「もう 1 枚」を押すたびに違う問題になり、答えの紙も一緒に出る。">
+  <meta property="og:url" content="https://t-of.github.io/pencil-hour/">
+  <meta property="og:image" content="https://t-of.github.io/pencil-hour/icons/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- apple-mobile-web-app-status-bar-style は付けない（black-translucent だと iOS 26 で上部が隠れる） -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="PENCIL HOUR">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- 紙の字体（どちらも OFL。README の「字体」） -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <link rel="stylesheet" href="./webapp-kit/webapp-kit.css">
+  <link rel="stylesheet" href="./style.css">
+  <!-- 紙の大きさ。main.js が A4 / Letter に書き換える -->
+  <style id="page-size">@page { size: A4 portrait; margin: 0; }</style>
+</head>
+<body>
+  <main class="app">
+    <header class="bar">
+      <h1 class="bar__title">PENCIL HOUR</h1>
+      <div class="bar__actions">
+        <button class="pill" id="lang" type="button" data-t="lang.other">English</button>
+        <button class="pill" id="sound" type="button" aria-pressed="true"><span data-t="opt.sound">音</span> <span id="sound-state">ON</span></button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <section class="side">
+        <div class="field">
+          <h2 class="field__label" data-t="type.label">問題の種類</h2>
+          <div class="seg seg--big" data-key="type">
+            <button type="button" data-v="calc" data-t="type.calc">計算</button>
+            <button type="button" data-v="maze" data-t="type.maze">迷路</button>
+            <button type="button" data-v="find" data-t="type.find">数字さがし</button>
+          </div>
+        </div>
+        <div class="field">
+          <h2 class="field__label" data-t="level.label">難しさ</h2>
+          <div class="seg" data-key="level">
+            <button type="button" data-v="1" data-t="level.1">やさしい</button>
+            <button type="button" data-v="2" data-t="level.2">ふつう</button>
+            <button type="button" data-v="3" data-t="level.3">しっかり</button>
+          </div>
+        </div>
+        <div class="field" id="op-field">
+          <h2 class="field__label" data-t="op.label">計算のしかた</h2>
+          <div class="seg seg--grid" data-key="op">
+            <button type="button" data-v="add" data-t="op.add">たし算</button>
+            <button type="button" data-v="sub" data-t="op.sub">ひき算</button>
+            <button type="button" data-v="mul" data-t="op.mul">かけ算</button>
+            <button type="button" data-v="mix" data-t="op.mix">まぜる</button>
+          </div>
+        </div>
+
+        <!-- スマホでは画面の下に固定、PC では設定の列の下 -->
+        <div class="actions">
+          <div class="actions__main">
+            <button type="button" class="btn" id="another" data-t="btn.another">もう 1 枚</button>
+            <button type="button" class="btn btn--print" id="print" data-t="btn.print">印刷</button>
+          </div>
+          <p class="ios-hint" id="ios-hint" hidden data-t="print.iosHint">印刷できないときは、Safari で開いてください。</p>
+          <div class="actions__opts">
+            <label class="check"><input type="checkbox" id="answers" checked> <span data-t="opt.answers">答えの紙も刷る</span></label>
+            <div class="paper-pick">
+              <span data-t="opt.paper">紙</span>
+              <div class="seg seg--small" data-key="paper">
+                <button type="button" data-v="a4" data-t="opt.a4">A4</button>
+                <button type="button" data-v="letter" data-t="opt.letter">Letter</button>
+              </div>
+            </div>
+          </div>
+          <!-- 紹介の枠（最初の版は空。印刷では必ず消える） -->
+          <aside class="slot" data-slot="referral" hidden><span class="slot__label" data-t="ad.label">広告</span></aside>
+        </div>
+      </section>
+
+      <section class="preview">
+        <div class="coach" id="coach" hidden>
+          <ol>
+            <li data-t="coach.1">種類と難しさを選ぶ。</li>
+            <li data-t="coach.2">ちがう問題がよければ「もう 1 枚」。</li>
+            <li data-t="coach.3">「印刷」で、問題と答えの 2 枚が出る。</li>
+          </ol>
+          <button type="button" class="pill" id="coach-ok" data-t="coach.ok">わかった</button>
+        </div>
+        <div class="seg seg--small preview__tabs" data-key="view">
+          <button type="button" data-v="puzzle" data-t="view.sheet">問題</button>
+          <button type="button" data-v="answer" data-t="view.answer">答え</button>
+        </div>
+        <div class="preview__frame" id="frame">
+          <div class="paper" id="paper"></div>
+        </div>
+        <button type="button" class="link" id="share-settings" data-t="share.settings">この設定を共有</button>
+        <!-- 広告の枠（PC は見本の横。最初の版は空。印刷では必ず消える） -->
+        <aside class="slot" data-slot="side" hidden><span class="slot__label" data-t="ad.label">広告</span></aside>
+      </section>
+    </div>
+
+    <!-- 広告の枠（いちばん下。最初の版は空。印刷では必ず消える） -->
+    <aside class="slot" data-slot="bottom" hidden><span class="slot__label" data-t="ad.label">広告</span></aside>
+
+    <footer class="credit">
+      <p><a href="/" data-t="credit">T.OF... のアプリ</a></p>
+      <p class="credit__kit">
+        <button class="pill" data-wak="install" hidden data-t="kit.install">アプリにする</button>
+        <button class="pill" data-wak="share" data-t="kit.share">共有</button>
+      </p>
+    </footer>
+  </main>
+
+  <script src="./webapp-kit/webapp-kit.js"></script>
+  <script src="./puzzles.js"></script>
+  <script src="./main.js"></script>
+</body>
+</html>
