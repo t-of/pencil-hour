@@ -28,8 +28,8 @@ function setAudioSession(soundOn) {
 // ---- 言葉（画面も紙もここから引く。仕様 13） ----
 const STRINGS = {
   ja: {
-    'app.tagline': '大きな字のプリントを毎日刷る',
-    'app.desc': '計算・迷路・数字さがしの大きな字のプリントを、その場で作って A4 1 枚に刷る。「もう 1 枚」を押すたびに違う問題になり、答えの紙も一緒に出る。',
+    'app.tagline': '頭の体操プリント：計算・迷路・数字さがし',
+    'app.desc': '頭の体操プリント PENCIL HOUR。計算・迷路・数字さがしの大きな字のプリントを、その場で作って A4 1 枚に刷る。「もう 1 枚」を押すたびに違う問題になり、答えの紙も一緒に出る。',
     'type.label': '問題の種類', 'type.calc': '計算', 'type.maze': '迷路', 'type.find': '数字さがし',
     'level.label': '難しさ', 'level.1': 'やさしい', 'level.2': 'ふつう', 'level.3': 'しっかり',
     'op.label': '計算のしかた', 'op.add': 'たし算', 'op.sub': 'ひき算', 'op.mul': 'かけ算', 'op.mix': 'まぜる',
@@ -59,8 +59,8 @@ const STRINGS = {
       '夏の空と大きな雲', '夏のさかり。水分をとりましょう', 'お月見の季節', '実りの秋', '木の葉が色づくころ', '一年のしめくくり'],
   },
   en: {
-    'app.tagline': 'Large-print puzzle sheets, fresh every day',
-    'app.desc': 'Make large-print arithmetic, maze and number-search sheets on the spot and print them on one page. Every tap of “New sheet” gives new puzzles, with an answer sheet to match.',
+    'app.tagline': 'Large-Print Puzzle Sheets: Arithmetic, Maze, Number Search',
+    'app.desc': 'Large-print puzzle sheets, PENCIL HOUR. Make large-print arithmetic, maze and number-search sheets on the spot and print them on one page. Every tap of “New sheet” gives new puzzles, with an answer sheet to match.',
     'type.label': 'Puzzle type', 'type.calc': 'Arithmetic', 'type.maze': 'Maze', 'type.find': 'Number search',
     'level.label': 'Difficulty', 'level.1': 'Easy', 'level.2': 'Medium', 'level.3': 'Harder',
     'op.label': 'Operation', 'op.add': 'Addition', 'op.sub': 'Subtraction', 'op.mul': 'Multiplication', 'op.mix': 'Mixed',
