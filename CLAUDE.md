@@ -1,6 +1,6 @@
 # PENCIL HOUR
 
-T.OF... のアプリ。https://t-of.github.io/pencil-hour/
+T.OF... のアプリ。https://pencil-hour.t-of.workers.dev/（Cloudflare Workers。RULES.md §14）
 
 - ルールは本部の `~/GitHub/tof/t-of.github.io/RULES.md` に従う（全アプリ共通）。ブランドは `docs/BRAND.md`。
 - 直したら本部で `npm run audit:browser -- pencil-hour` を通す。

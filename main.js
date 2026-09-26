@@ -225,7 +225,7 @@ function sheetHtml(p, answer) {
       <p class="sh-how">${how}</p>
     </header>
     <div class="sh-body sh-body--${p.type}">${body}</div>
-    <footer class="sh-foot"><span class="sh-no">${no}</span><span class="sh-url">t-of.github.io/pencil-hour</span></footer>
+    <footer class="sh-foot"><span class="sh-no">${no}</span><span class="sh-url">pencil-hour.t-of.workers.dev</span></footer>
   </article>`;
 }
 

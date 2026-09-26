@@ -4,7 +4,7 @@
 
 ## 🔗 リンク
 
-- 使う: https://t-of.github.io/pencil-hour/
+- 使う: https://pencil-hour.t-of.workers.dev/
 - 制作: [T.OF...](https://t-of.github.io/)
 
 ## 遊び方
