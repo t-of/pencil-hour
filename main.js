@@ -392,3 +392,5 @@ $('coach').hidden = settings.coached;
 applyLang();
 update();
 new ResizeObserver(fit).observe($('frame').parentElement);
+// スマホの下の帯の高さを測って、その分だけ画面の下をあける（言葉や幅で段の数が変わる）
+new ResizeObserver(([e]) => document.documentElement.style.setProperty('--bar-h', `${e.target.offsetHeight}px`)).observe(document.querySelector('.actions'));

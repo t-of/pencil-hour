@@ -35,7 +35,7 @@ button { font: inherit; color: inherit; }
   padding:
     max(12px, env(safe-area-inset-top))
     max(12px, env(safe-area-inset-right))
-    calc(170px + env(safe-area-inset-bottom))
+    calc(var(--bar-h, 170px) + 16px)
     max(12px, env(safe-area-inset-left));
   touch-action: manipulation;   /* ダブルタップ拡大を止める */
 }
@@ -73,7 +73,7 @@ button { font: inherit; color: inherit; }
 .seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 700; }
 .seg--small button { min-height: 44px; font-size: 14px; }
 
-/* スマホ: 印刷の帯を画面の下に固定する */
+/* スマホ: 印刷の帯を画面の下に固定する。帯の高さ（--bar-h）は main.js が測って、その分 .app の下をあける */
 .actions {
   position: fixed;
   left: 0; right: 0; bottom: 0;
@@ -86,7 +86,7 @@ button { font: inherit; color: inherit; }
     max(12px, env(safe-area-inset-right))
     max(10px, env(safe-area-inset-bottom))
     max(12px, env(safe-area-inset-left));
-  background: rgba(19, 21, 27, 0.97);
+  background: #13151b;   /* 後ろの字が透けないように塗りつぶす */
   border-top: 1px solid var(--line);
 }
 .actions__main { display: grid; grid-template-columns: 1fr 1.6fr; gap: 8px; }
@@ -186,14 +186,17 @@ button { font: inherit; color: inherit; }
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 1fr 1fr;
-  column-gap: 8mm;
+  column-gap: 4mm;
   font-size: 28pt;
 }
 .sheet[data-level="2"] .calc { font-size: 24pt; }
 .sheet[data-level="3"] .calc { font-size: 22pt; }
-/* 列の幅を em で決めて、数字と □ の位置をそろえる */
-.q { display: grid; grid-template-columns: 1.3em 1.35em 0.95em 1.35em 0.95em 2.6em; align-items: center; }
-.q__no { font-size: 0.5em; }
+/* 列の幅を em でそろえる。日本語の字体は + − = が全角なので記号の列は 1em、
+   英語の字体（Atkinson）は数字が広いので 2 桁で 1.5em。番号の列は 2 桁の「(12)」でも式との間があくように。
+   やさしい（28pt）の答えは 2 桁までなので □ を細くして、1 行を列の幅に収める */
+.q { display: grid; grid-template-columns: 1.25em 1.5em 1em 1.5em 1em var(--box, 2.6em); column-gap: 0.18em; align-items: center; }
+.sheet[data-level="1"] .q { --box: 1.8em; }
+.q__no { font-size: 0.45em; }
 .q__n { text-align: right; }
 .q__op { text-align: center; }
 .q__box {
